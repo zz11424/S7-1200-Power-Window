@@ -177,12 +177,35 @@ WindowControl-PLC/
 ├── CHANGELOG.md
 ├── docs/
 │   └── 测试记录.md
-└── screenshots/          # 18 张验证截图（监控表 + 梯形图）
+├── screenshots/          # 26 张验证截图（监控表 + 梯形图）
+└── automation/           # 自动化测试框架（Python）
+    ├── README.md
+    ├── run.py
+    ├── harness/
+    └── reports/
 ```
 
 ---
 
-## 9. 说明
+## 9. 自动化回归
+
+手工测试每轮约 40 分钟。`automation/` 用 Python 脚本替代手工操作：
+
+```bash
+cd automation
+python run.py                          # 本地模拟器
+python run.py --backend plc --ip <IP>  # 真实 PLC（S7 协议）
+```
+
+12 条用例自动下发激励、断言输出、记录耗时，单轮回归约 **5 秒**，输出 `reports/report.md` 与 JUnit 格式结果。
+
+框架把 PLC 客户端抽象为可替换接口，模拟器与真实设备共用同一套用例。
+
+详见 **[automation/README.md](automation/README.md)**。
+
+---
+
+## 10. 说明
 
 - 本项目为个人学习项目，程序在 PLCSIM 中验证，未接入实车硬件。
 - 防夹逻辑参考乘用车电动车窗的一般控制策略，非任何厂商的实际实现。
